@@ -1,0 +1,13 @@
+name: COVID19Tlax
+title: COVID19Tlax
+username:
+account: jcordova
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 2126661
+bundleId: 3052807
+url: https://dsinteg.shinyapps.io/COVID19Tlax/
+when: 1587609084.40091
+asMultiple: FALSE
+asStatic: FALSE
+ignoredFiles: ui - Copy.R|R/functions.R|www/favicon.ico|www/QuedateEnCasa-01.png

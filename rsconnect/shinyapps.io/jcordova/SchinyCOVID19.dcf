@@ -1,0 +1,12 @@
+name: SchinyCOVID19
+title: SchinyCOVID19
+username:
+account: jcordova
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 2126045
+bundleId: 3019907
+url: https://jcordova.shinyapps.io/SchinyCOVID19/
+when: 1586999760.47898
+asMultiple: FALSE
+asStatic: FALSE
