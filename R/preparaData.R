@@ -83,9 +83,6 @@ TOTAL_HOSPITALIZADOS_MUJER <- COVID19_Mexico %>%
   summarise(CANTIDAD = n())   
 
 
-
-
-
 ### Total de defunciones ------------------
 
 TOTAL_DEFUNCIONES <- COVID19_Mexico %>% 
@@ -103,6 +100,40 @@ TOTAL_DEFUNCIONES_MUJER <- COVID19_Mexico %>%
   group_by(ENTIDAD_UM) %>% 
   summarise(CANTIDAD = n()) 
 
+
+### Total Intubados -------------------------
+
+TOTAL_INTUBADO <- COVID19_Mexico %>% 
+  filter( ENTIDAD_UM == "TLAXCALA" &  INTUBADO == "SI"  ) %>% 
+  group_by(ENTIDAD_UM) %>% 
+  summarise(CANTIDAD = n()  )  
+
+TOTAL_INTUBADO_HOMBRE <- COVID19_Mexico %>% 
+  filter( ENTIDAD_UM == "TLAXCALA" &  INTUBADO == "SI" & SEXO == "HOMBRE" ) %>% 
+  group_by(ENTIDAD_UM) %>% 
+  summarise(CANTIDAD = n()  )  
+
+TOTAL_INTUBADO_MUJER <- COVID19_Mexico %>% 
+  filter( ENTIDAD_UM == "TLAXCALA" &  INTUBADO == "SI" & SEXO == "MUJER" ) %>% 
+  group_by(ENTIDAD_UM) %>% 
+  summarise(CANTIDAD = n()  )  
+
+### Total UCI -------------------------
+
+TOTAL_UCI <- COVID19_Mexico %>% 
+  filter( ENTIDAD_UM == "TLAXCALA" &  UCI == "SI"  ) %>% 
+  group_by(ENTIDAD_UM) %>% 
+  summarise(CANTIDAD = n()  )  
+
+TOTAL_UCI_HOMBRE <- COVID19_Mexico %>% 
+  filter( ENTIDAD_UM == "TLAXCALA" &  UCI == "SI" & SEXO == "HOMBRE" ) %>% 
+  group_by(ENTIDAD_UM) %>% 
+  summarise(CANTIDAD = n()  )  
+
+TOTAL_UCI_MUJER <- COVID19_Mexico %>% 
+  filter( ENTIDAD_UM == "TLAXCALA" &  UCI == "SI" & SEXO == "MUJER" ) %>% 
+  group_by(ENTIDAD_UM) %>% 
+  summarise(CANTIDAD = n()  )  
 
 ### Edad defuncion  ---------------
 
@@ -236,6 +267,31 @@ TIEMPO_INGRESO_MUNICIPIOS <-  COVID19_Mexico %>%
   group_by(ENTIDAD_UM, MUNICIPIO) %>%
   summarise(PROMEDIO_ESPERA_INGRESO = mean(DIAS_ESPERA_INGRESO) )
   
-## Cantidad de Enfermos 
+## Cantidad de Enfermos Hospitales
+
+COVID19_SECTOR <- COVID19_Mexico %>% 
+  filter( ENTIDAD_UM == "TLAXCALA" &  RESULTADO == "Positivo SARS-CoV-2"  ) %>% 
+  group_by(ENTIDAD_UM,SECTOR) %>% 
+  summarise(CANTIDAD = n()  )   
+
+COVID19_INTUBADO <- COVID19_Mexico %>% 
+  filter( ENTIDAD_UM == "TLAXCALA" &  INTUBADO == "SI"  ) %>% 
+  group_by(ENTIDAD_UM,SECTOR) %>% 
+  summarise(CANTIDAD = n()  )   
+
+
+COVID19_HOSPITALIZADO <- COVID19_Mexico %>% 
+  filter( ENTIDAD_UM == "TLAXCALA" &  RESULTADO == "Positivo SARS-CoV-2" & TIPO_PACIENTE == "HOSPITALIZADO" ) %>% 
+  group_by(ENTIDAD_UM,SECTOR) %>% 
+  summarise(CANTIDAD = n()  )  
+
+COVID19_DEFUNCION <- COVID19_Mexico %>% 
+  filter( ENTIDAD_UM == "TLAXCALA" &  DIAS_SINTOMAS_DEF >-1    & DIAS_SINTOMAS_DEF != 'NA'  ) %>% 
+  group_by(ENTIDAD_UM,SECTOR) %>% 
+  summarise(CANTIDAD = n()  ) 
+
+
+
+
   
   

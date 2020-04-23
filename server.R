@@ -14,9 +14,29 @@ library("ggrepel")
 
 function(session, input, output) {
     # Dashboard Principal ---- Demo Modal ----
-    # Total de Contagios -------
-
+  
+     
+  # Capacidades Hospitales --------------
+  output$todosContagios <- renderInfoBox({
+    infoBox(
+      "TOTAL DE CONTAGIOS", 
+      tags$p(TOTAL_CONTAGIOS$CANTIDAD, style = "font-size: 200%;"), 
+      icon = icon("notes-medical"),
+      color = "blue"
+    )
+  }) 
+  
+  output$todosDefunciones <- renderInfoBox({
+    infoBox(
+      "TOTAL DE CONTAGIOS", 
+      tags$p(TOTAL_CONTAGIOS$CANTIDAD, style = "font-size: 200%;"), 
+      icon = icon("notes-medical"),
+      color = "blue"
+    )
+  })
     
+      
+    # Total de Contagios -------
     output$totalContagios <- renderInfoBox({
         infoBox(
             "TOTAL DE CONTAGIOS", 
@@ -43,25 +63,6 @@ function(session, input, output) {
             color = "blue"
         )
     }) 
-    
-    ### Tiempo Contagios ---------------
-    
-
-    
-    output$tiempoContagios <- renderInfoBox({
-      TIEMPO_CONTAGIOS <-  COVID19_Mexico %>% 
-        filter( ENTIDAD_UM == "TLAXCALA" & RESULTADO == "Positivo SARS-CoV-2" & FECHA_INGRESO <= input$DatesMerge ) %>% 
-        group_by(ENTIDAD_UM ) %>% 
-        summarise(CANTIDAD = n())
-      
-      
-      infoBox(
-        "TOTAL DE CONTAGIOS", 
-        tags$p(TIEMPO_CONTAGIOS$CANTIDAD, style = "font-size: 200%;"), 
-        icon = icon("notes-medical"),
-        color = "blue"
-      )
-    })
     
     
     ## Total abulatorios --------------
@@ -123,6 +124,36 @@ function(session, input, output) {
         )
     })    
     
+    ### Total Intubados ------------
+    
+    
+    output$totalIntubados <- renderInfoBox({
+      infoBox(
+        "Intubados", 
+        tags$p(TOTAL_INTUBADO$CANTIDAD, style = "font-size: 200%;"),
+        icon = icon("procedures"),
+        color = "maroon"
+      )
+    })
+    
+    output$totalIntubadosHombre <- renderInfoBox({
+      infoBox(
+        "Hombres", 
+        tags$p(TOTAL_INTUBADO_HOMBRE$CANTIDAD, style = "font-size: 200%;"),
+        icon = icon("male"),
+        color = "maroon"
+      )
+    })
+    
+    output$totalIntubadosMujer <- renderInfoBox({
+      infoBox(
+        "Mujeres", 
+        tags$p(TOTAL_INTUBADO_MUJER$CANTIDAD, style = "font-size: 200%;"),
+        icon = icon("female"),
+        color = "maroon"
+      )
+    })     
+    
     ### TOTAL DE DEFUNCIONES ---------------
         
     output$totalDefunciones <- renderInfoBox({
@@ -150,7 +181,71 @@ function(session, input, output) {
             icon = icon("female"),
             color = "yellow"
         )
-    })    
+    })   
+    
+    ##############################################################
+    ### Capacidad Hospitalizacion ---------------
+    
+    output$capacidadHospitales <- renderValueBox({
+      valueBox(
+        "Hospitalización", 
+        tags$p(paste0(round(CAPACIDAD_TLAXCALA$CAMAS_HOSPITAL,0) ," camas") , style = "font-size: 200%;"),
+        icon = icon("bed"),
+        color = "purple"
+      )
+    })
+    
+    output$capacidadUCI <- renderValueBox({
+      
+      valueBox(
+        "UCI", 
+        tags$p(paste0(round(CAPACIDAD_TLAXCALA$CAMAS_UCI,0) ," camas"), style = "font-size: 200%;"), 
+        icon = icon("procedures"),
+        color = "maroon"
+      )
+    })  
+    
+    
+    output$porcentajeCapacidadUCI <- renderValueBox({
+      capacidadUCI <- 100*(CAPACIDAD_TLAXCALA$CAMAS_UCI - TOTAL_UCI$CANTIDAD)/CAPACIDAD_TLAXCALA$CAMAS_UCI
+      valueBox(
+        "Disponible UCI", 
+        tags$p(paste0(round(capacidadUCI,0) , " %") , style = "font-size: 200%;"), 
+        icon = icon("procedures"),
+        color = "maroon"
+      )
+    })
+    
+    output$porcentajeCapacidadHospitalizados <- renderValueBox({
+      capacidadHospitalizacion <- 100*(CAPACIDAD_TLAXCALA$CAMAS_HOSPITAL - TOTAL_HOSPITALIZADOS$CANTIDAD)/ CAPACIDAD_TLAXCALA$CAMAS_HOSPITAL
+      valueBox(
+        "Disponible", 
+        tags$p(paste0(round(capacidadHospitalizacion,0) , " %"), style = "font-size: 200%;"), 
+        icon = icon("bed"),
+        color = "purple"
+      )
+    })  
+    
+    
+    
+    #############################################################
+    ### Tiempo Contagios ---------------
+    
+    output$tiempoContagios <- renderInfoBox({
+      TIEMPO_CONTAGIOS <-  COVID19_Mexico %>% 
+        filter( ENTIDAD_UM == "TLAXCALA" & RESULTADO == "Positivo SARS-CoV-2" & FECHA_INGRESO <= input$DatesMerge ) %>% 
+        group_by(ENTIDAD_UM ) %>% 
+        summarise(CANTIDAD = n())
+      
+      infoBox(
+        "TOTAL DE CONTAGIOS", 
+        tags$p(TIEMPO_CONTAGIOS$CANTIDAD, style = "font-size: 200%;"), 
+        icon = icon("notes-medical"),
+        color = "blue"
+      )
+    })
+    
+    
     
     ### Otros padecimientos de los fallecidos ---------------
     ### Obesidad ------------------
@@ -342,8 +437,6 @@ function(session, input, output) {
     
     ## Edad de personas fallecidad -------------
     
-   
-    
     output$edadMenorDefuncion <- renderValueBox({
       valueBox(
         "Menor Edad", 
@@ -375,10 +468,7 @@ function(session, input, output) {
     
     ## Histograma Contagio por Institucion ---------------
     
-    COVID19_SECTOR <- COVID19_Mexico %>% 
-        filter( ENTIDAD_UM == "TLAXCALA" &  RESULTADO == "Positivo SARS-CoV-2"  ) %>% 
-        group_by(ENTIDAD_UM,SECTOR) %>% 
-        summarise(CANTIDAD = n()  )         
+      
         
     output$distContagiados <- renderPlot({
         p <- ggplot(COVID19_SECTOR, aes(x=SECTOR,y=CANTIDAD,fill=SECTOR)) + 
@@ -389,10 +479,7 @@ function(session, input, output) {
         plot(p)
     })
     
-    COVID19_INTUBADO <- COVID19_Mexico %>% 
-        filter( ENTIDAD_UM == "TLAXCALA" &  INTUBADO == "SI"  ) %>% 
-        group_by(ENTIDAD_UM,SECTOR) %>% 
-        summarise(CANTIDAD = n()  )   
+
     
     output$distIntubados <- renderPlot({
         p <- ggplot(COVID19_INTUBADO, aes(x=SECTOR,y=CANTIDAD,fill=SECTOR)) + 
@@ -403,10 +490,7 @@ function(session, input, output) {
         plot(p)
     })
 
-    COVID19_HOSPITALIZADO <- COVID19_Mexico %>% 
-        filter( ENTIDAD_UM == "TLAXCALA" &  RESULTADO == "Positivo SARS-CoV-2" & TIPO_PACIENTE == "HOSPITALIZADO" ) %>% 
-        group_by(ENTIDAD_UM,SECTOR) %>% 
-        summarise(CANTIDAD = n()  )         
+       
     
     output$distHospitalizados <- renderPlot({
         p <- ggplot(COVID19_HOSPITALIZADO, aes(x=SECTOR,y=CANTIDAD,fill=SECTOR)) + 
@@ -417,10 +501,7 @@ function(session, input, output) {
         plot(p)
     })
     
-    COVID19_DEFUNCION <- COVID19_Mexico %>% 
-        filter( ENTIDAD_UM == "TLAXCALA" &  DIAS_SINTOMAS_DEF >-1    & DIAS_SINTOMAS_DEF != 'NA'  ) %>% 
-        group_by(ENTIDAD_UM,SECTOR) %>% 
-        summarise(CANTIDAD = n()  )   
+  
     
     output$distDefunciones <- renderPlot({
         p <- ggplot(COVID19_DEFUNCION, aes(x=SECTOR,y=CANTIDAD,fill=SECTOR)) + 

@@ -22,6 +22,6 @@ source(here::here("R/preparaData.R"))
 source(here::here("R/maps.R"))
 
 CAPACIDAD_TLAXCALA <- data.frame(
-  "camasHospital" = 714,
-  "camasUCI" = 34
+  "CAMAS_HOSPITAL" = 714,
+  "CAMAS_UCI" = 34
 )

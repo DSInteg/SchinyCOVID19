@@ -54,50 +54,26 @@ body <- dashboardBody(
             h1("Estadística de contagios por COVID19 en el estado de Tlaxcala, actualizado a 22 de Abril 2020 "),
             tags$a( href="https://datos.gob.mx/busca/dataset/informacion-referente-a-casos-covid-19-en-mexico", "Fuente: datos.gob.mx",target="_blank"),hr(),
     
-            h2("Resumen de Transmisiones" ),p("El primer paciente contagiado con COVID-19 fue hospitalizado el día 23 de marzo."),
+            h2("Resumen de Transmisiones" ),p("En Tlaxcala, el primer paciente contagiado con COVID-19 fue hospitalizado el día 23 de marzo."),
             ## TOTAL Contagios -----------
-            fluidRow(
-              column(width = 12,
-                     # Dynamic infoBoxes
-                     infoBoxOutput("totalContagios", width = 6) %>% withSpinner(color="#0dc5c1"),
-                     infoBoxOutput("totalDefunciones", width = 6)
-              )
-            ),
-            fluidRow(
-              column(width = 12,
-                     # Dynamic infoBoxes
-                     infoBoxOutput("capacidadHospitales", width = 4),
-                     infoBoxOutput("totalHospitalizados", width = 4),
-                     infoBoxOutput("porcentajeCapacidadHospitalizados", width = 4)
-              )
-            ),  
-            fluidRow(
-              column(width = 12,
-                     # Dynamic infoBoxes
-                     infoBoxOutput("capacidadUCI", width = 4),
-                     infoBoxOutput("totalUCI", width = 4),
-                     infoBoxOutput("porcentajeCapacidadUCI", width = 4)   
-              )
-            ),    
-            h2("Transmisión en el estado de Tlaxcala a lo largo del tiempo"),
-            fluidRow(
-              column(width = 12,
-                      sliderInput("DatesMerge",
-                                  "Dates:",
-                                  min = as.Date("2020-03-23","%Y-%m-%d"),
-                                  max = as.Date(Sys.Date(),"%Y-%m-%d"),
-                                  value=as.Date(Sys.Date()),
-                                  timeFormat="%Y-%m-%d", width = '100%')                     
-                     )
-
-            ),
+  
+            #fluidRow(
+            #  column(width = 12,
+            #          sliderInput("DatesMerge",
+            #                      "Dates:",
+            #                      min = as.Date("2020-03-23","%Y-%m-%d"),
+            #                      max = as.Date(Sys.Date(),"%Y-%m-%d"),
+            #                      value=as.Date(Sys.Date()),
+            #                      timeFormat="%Y-%m-%d", width = '100%')                     
+            #         )
+            #),
             ## TOTAL Contagios -----------
             fluidRow(
               column(width = 12,
                     # Dynamic infoBoxes
-                    infoBoxOutput("tiempoContagios", width = 4) %>% withSpinner(color="#0dc5c1"),
-                    infoBoxOutput("tiempoContagiosHombre", width = 4),
-                    infoBoxOutput("tiempoContagiosMujer", width =4)                
+                    infoBoxOutput("totalContagios", width = 4) %>% withSpinner(color="#0dc5c1"),
+                    infoBoxOutput("totalContagiosHombre", width = 4),
+                    infoBoxOutput("totalContagiosMujer", width =4)                
               )
             ),
             ## Total Atencion Ambulatoria ----------
@@ -118,6 +94,14 @@ body <- dashboardBody(
                            
               )              
             ),
+            ## Total Intubados --------------
+            fluidRow(
+              column(width = 12, 
+                     infoBoxOutput("totalIntubados", width = 4),
+                     infoBoxOutput("totalIntubadosHombre", width = 4),  
+                     infoBoxOutput("totalIntubadosMujer", width = 4)
+              )              
+            ),    
             ## Total Defunciones --------------
             fluidRow(
               column(width = 12, 
@@ -126,6 +110,28 @@ body <- dashboardBody(
                      infoBoxOutput("TotalDefuncionesMujer", width = 4)
               )              
             ),
+    
+            ### Capacidad de hospitales en Tlaxcala
+    
+            h2("Capacidad de Hopitalización en Tlaxcala"),    
+            fluidRow(
+              column(width = 12,
+                     valueBoxOutput("capacidadHospitales", width = 6),
+                     valueBoxOutput("capacidadUCI", width = 6)
+              )
+            ),  
+            fluidRow(
+              column(width = 12,
+                     valueBoxOutput("porcentajeCapacidadHospitalizados", width = 6),
+                     valueBoxOutput("porcentajeCapacidadUCI", width = 6)
+              )
+            ),    
+            fluidRow(
+              column(width=12,
+                     tags$a( href="https://www.mexicovid19.mx/seguimientoestados.html#section2", "Fuente: mexicovid19.mx",target="_blank"),hr())
+            ),
+    
+    
             ### Caracteristicas de las personas contagiadas con COVID
             h2("Padecimientos de las personas fallecidas por COVID-19"),
             fluidRow(
