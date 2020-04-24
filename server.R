@@ -123,6 +123,35 @@ function(session, input, output) {
             color = "purple"
         )
     })    
+    ### Total UCI------------
+    
+    
+    output$totalUCI <- renderInfoBox({
+      infoBox(
+        "UCI", 
+        tags$p(TOTAL_UCI$CANTIDAD, style = "font-size: 200%;"),
+        icon = icon("procedures"),
+        color = "maroon"
+      )
+    })
+    
+    output$totalUCIHombre <- renderInfoBox({
+      infoBox(
+        "Hombres", 
+        tags$p(TOTAL_UCI_HOMBRE$CANTIDAD, style = "font-size: 200%;"),
+        icon = icon("male"),
+        color = "maroon"
+      )
+    })
+    
+    output$totalUCIMujer <- renderInfoBox({
+      infoBox(
+        "Mujeres", 
+        tags$p(TOTAL_UCI_MUJER$CANTIDAD, style = "font-size: 200%;"),
+        icon = icon("female"),
+        color = "maroon"
+      )
+    })     
     
     ### Total Intubados ------------
     
@@ -131,8 +160,8 @@ function(session, input, output) {
       infoBox(
         "Intubados", 
         tags$p(TOTAL_INTUBADO$CANTIDAD, style = "font-size: 200%;"),
-        icon = icon("procedures"),
-        color = "maroon"
+        icon = icon("file-medical-alt"),
+        color = "teal"
       )
     })
     
@@ -141,7 +170,7 @@ function(session, input, output) {
         "Hombres", 
         tags$p(TOTAL_INTUBADO_HOMBRE$CANTIDAD, style = "font-size: 200%;"),
         icon = icon("male"),
-        color = "maroon"
+        color = "teal"
       )
     })
     
@@ -150,7 +179,7 @@ function(session, input, output) {
         "Mujeres", 
         tags$p(TOTAL_INTUBADO_MUJER$CANTIDAD, style = "font-size: 200%;"),
         icon = icon("female"),
-        color = "maroon"
+        color = "teal"
       )
     })     
     
@@ -198,7 +227,7 @@ function(session, input, output) {
     output$capacidadUCI <- renderValueBox({
       
       valueBox(
-        "UCI", 
+        "Unidad de Cuidados Intensivos", 
         tags$p(paste0(round(CAPACIDAD_TLAXCALA$CAMAS_UCI,0) ," camas"), style = "font-size: 200%;"), 
         icon = icon("procedures"),
         color = "maroon"
@@ -474,7 +503,7 @@ function(session, input, output) {
         p <- ggplot(COVID19_SECTOR, aes(x=SECTOR,y=CANTIDAD,fill=SECTOR)) + 
             geom_bar(stat = "identity") + 
             geom_text(aes(label=CANTIDAD),position=position_stack( vjust=0.5),size=10) +
-            xlab(input$variable) + labs(title="Pacientes con resultado positivo por institución") + 
+            xlab(input$variable) + labs(title="Pacientes con resultado positivo") + 
           theme(legend.position="none")
         plot(p)
     })
@@ -485,18 +514,25 @@ function(session, input, output) {
         p <- ggplot(COVID19_INTUBADO, aes(x=SECTOR,y=CANTIDAD,fill=SECTOR)) + 
             geom_bar(stat = "identity") + 
             geom_text(aes(label=CANTIDAD),position=position_stack( vjust=0.5), size=8) +
-            xlab(input$variable) + labs(title="Pacientes intubados por institución") + 
+            xlab(input$variable) + labs(title="Pacientes intubados") + 
           theme(legend.position="none")
         plot(p)
     })
 
-       
+    output$distUCI <- renderPlot({
+      p <- ggplot(COVID19_UCI, aes(x=SECTOR,y=CANTIDAD,fill=SECTOR)) + 
+        geom_bar(stat = "identity") + 
+        geom_text(aes(label=CANTIDAD),position=position_stack( vjust=0.5), size=8) +
+        xlab(input$variable) + labs(title="Pacientes en UCI") + 
+        theme(legend.position="none")
+      plot(p)
+    })       
     
     output$distHospitalizados <- renderPlot({
         p <- ggplot(COVID19_HOSPITALIZADO, aes(x=SECTOR,y=CANTIDAD,fill=SECTOR)) + 
             geom_bar(stat = "identity") + 
             geom_text(aes(label=CANTIDAD),position=position_stack( vjust=0.5),size=10) +
-            xlab(input$variable) + labs(title="Pacientes hospitalizados por institución") + 
+            xlab(input$variable) + labs(title="Pacientes hospitalizados") + 
           theme(legend.position="none")
         plot(p)
     })

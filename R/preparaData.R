@@ -68,17 +68,17 @@ TOTAL_AMBULATORIO_MUJER <- COVID19_Mexico %>%
 
 
 TOTAL_HOSPITALIZADOS <- COVID19_Mexico %>% 
-  filter( ENTIDAD_UM == "TLAXCALA" & TIPO_PACIENTE == "HOSPITALIZADO" & RESULTADO == "Positivo SARS-CoV-2" ) %>% 
+  filter( ENTIDAD_UM == "TLAXCALA" & TIPO_PACIENTE == "HOSPITALIZADO" & RESULTADO == "Positivo SARS-CoV-2" & is.na(FECHA_DEF) ) %>% 
   group_by(ENTIDAD_UM) %>% 
   summarise(CANTIDAD = n()) 
 
 TOTAL_HOSPITALIZADOS_HOMBRE <- COVID19_Mexico %>% 
-  filter( ENTIDAD_UM == "TLAXCALA" & TIPO_PACIENTE == "HOSPITALIZADO" & RESULTADO == "Positivo SARS-CoV-2" & SEXO == "HOMBRE" ) %>% 
+  filter( ENTIDAD_UM == "TLAXCALA" & TIPO_PACIENTE == "HOSPITALIZADO" & RESULTADO == "Positivo SARS-CoV-2" & SEXO == "HOMBRE"  & is.na(FECHA_DEF)) %>% 
   group_by(ENTIDAD_UM) %>% 
   summarise(CANTIDAD = n())
 
 TOTAL_HOSPITALIZADOS_MUJER <- COVID19_Mexico %>% 
-  filter( ENTIDAD_UM == "TLAXCALA" & TIPO_PACIENTE == "HOSPITALIZADO" & RESULTADO == "Positivo SARS-CoV-2" & SEXO == "MUJER" ) %>% 
+  filter( ENTIDAD_UM == "TLAXCALA" & TIPO_PACIENTE == "HOSPITALIZADO" & RESULTADO == "Positivo SARS-CoV-2" & SEXO == "MUJER"  & is.na(FECHA_DEF)) %>% 
   group_by(ENTIDAD_UM) %>% 
   summarise(CANTIDAD = n())   
 
@@ -104,34 +104,34 @@ TOTAL_DEFUNCIONES_MUJER <- COVID19_Mexico %>%
 ### Total Intubados -------------------------
 
 TOTAL_INTUBADO <- COVID19_Mexico %>% 
-  filter( ENTIDAD_UM == "TLAXCALA" &  INTUBADO == "SI"  ) %>% 
+  filter( ENTIDAD_UM == "TLAXCALA" &  INTUBADO == "SI" & is.na(FECHA_DEF)) %>% 
   group_by(ENTIDAD_UM) %>% 
   summarise(CANTIDAD = n()  )  
 
 TOTAL_INTUBADO_HOMBRE <- COVID19_Mexico %>% 
-  filter( ENTIDAD_UM == "TLAXCALA" &  INTUBADO == "SI" & SEXO == "HOMBRE" ) %>% 
+  filter( ENTIDAD_UM == "TLAXCALA" &  INTUBADO == "SI" & SEXO == "HOMBRE" & is.na(FECHA_DEF)) %>% 
   group_by(ENTIDAD_UM) %>% 
   summarise(CANTIDAD = n()  )  
 
 TOTAL_INTUBADO_MUJER <- COVID19_Mexico %>% 
-  filter( ENTIDAD_UM == "TLAXCALA" &  INTUBADO == "SI" & SEXO == "MUJER" ) %>% 
+  filter( ENTIDAD_UM == "TLAXCALA" &  INTUBADO == "SI" & SEXO == "MUJER" & is.na(FECHA_DEF) ) %>% 
   group_by(ENTIDAD_UM) %>% 
   summarise(CANTIDAD = n()  )  
 
 ### Total UCI -------------------------
 
 TOTAL_UCI <- COVID19_Mexico %>% 
-  filter( ENTIDAD_UM == "TLAXCALA" &  UCI == "SI"  ) %>% 
+  filter( ENTIDAD_UM == "TLAXCALA" &  UCI == "SI" & is.na(FECHA_DEF) ) %>% 
   group_by(ENTIDAD_UM) %>% 
   summarise(CANTIDAD = n()  )  
 
 TOTAL_UCI_HOMBRE <- COVID19_Mexico %>% 
-  filter( ENTIDAD_UM == "TLAXCALA" &  UCI == "SI" & SEXO == "HOMBRE" ) %>% 
+  filter( ENTIDAD_UM == "TLAXCALA" &  UCI == "SI" & SEXO == "HOMBRE" & is.na(FECHA_DEF)) %>% 
   group_by(ENTIDAD_UM) %>% 
   summarise(CANTIDAD = n()  )  
 
 TOTAL_UCI_MUJER <- COVID19_Mexico %>% 
-  filter( ENTIDAD_UM == "TLAXCALA" &  UCI == "SI" & SEXO == "MUJER" ) %>% 
+  filter( ENTIDAD_UM == "TLAXCALA" &  UCI == "SI" & SEXO == "MUJER" & is.na(FECHA_DEF)) %>% 
   group_by(ENTIDAD_UM) %>% 
   summarise(CANTIDAD = n()  )  
 
@@ -275,13 +275,17 @@ COVID19_SECTOR <- COVID19_Mexico %>%
   summarise(CANTIDAD = n()  )   
 
 COVID19_INTUBADO <- COVID19_Mexico %>% 
-  filter( ENTIDAD_UM == "TLAXCALA" &  INTUBADO == "SI"  ) %>% 
+  filter( ENTIDAD_UM == "TLAXCALA" &  INTUBADO == "SI"  &  is.na(FECHA_DEF)) %>% 
   group_by(ENTIDAD_UM,SECTOR) %>% 
   summarise(CANTIDAD = n()  )   
 
+COVID19_UCI <- COVID19_Mexico %>% 
+  filter( ENTIDAD_UM == "TLAXCALA" &  UCI == "SI"  &  is.na(FECHA_DEF)) %>% 
+  group_by(ENTIDAD_UM,SECTOR) %>% 
+  summarise(CANTIDAD = n()  )   
 
 COVID19_HOSPITALIZADO <- COVID19_Mexico %>% 
-  filter( ENTIDAD_UM == "TLAXCALA" &  RESULTADO == "Positivo SARS-CoV-2" & TIPO_PACIENTE == "HOSPITALIZADO" ) %>% 
+  filter( ENTIDAD_UM == "TLAXCALA" &  RESULTADO == "Positivo SARS-CoV-2" & TIPO_PACIENTE == "HOSPITALIZADO" &  is.na(FECHA_DEF)) %>% 
   group_by(ENTIDAD_UM,SECTOR) %>% 
   summarise(CANTIDAD = n()  )  
 

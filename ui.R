@@ -94,6 +94,14 @@ body <- dashboardBody(
                            
               )              
             ),
+            ## Total UCI --------------
+            fluidRow(
+              column(width = 12, 
+                     infoBoxOutput("totalUCI", width = 4),
+                     infoBoxOutput("totalUCIHombre", width = 4),  
+                     infoBoxOutput("totalUCIMujer", width = 4)
+              )              
+            ),     
             ## Total Intubados --------------
             fluidRow(
               column(width = 12, 
@@ -212,12 +220,15 @@ body <- dashboardBody(
     ### Histogramas Instituciones ----------------
             h3("Instituciones que atienden contagios de COVID-19 en Tlaxcala"), hr(),
             fluidRow(
-              column(width = 6,
+              column(width = 4,
                      plotOutput("distContagiados",width = "100%")
               ), 
-              column(width = 6,
+              column(width = 4,
                      plotOutput("distIntubados",width = "100%")
               ),
+              column(width = 4,
+                     plotOutput("distUCI",width = "100%")
+              )
             ), hr(),
             fluidRow(
               column(width = 6,
