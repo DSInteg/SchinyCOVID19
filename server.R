@@ -423,10 +423,10 @@ function(session, input, output) {
     #histograma enfermos por municipio -------------
     output$histMunicipios <- renderPlot({
 
-        p <- df_mxmunicipio_TLX %>% filter(CANTIDAD > 0) %>%  mutate(municipio_name = fct_reorder(municipio_name, desc(CANTIDAD))) %>%
+        p <- df_mxmunicipio_TLX %>% filter(CANTIDAD > 10) %>%  mutate(municipio_name = fct_reorder(municipio_name, desc(CANTIDAD))) %>%
             ggplot( aes(x=municipio_name,y=CANTIDAD,fill=municipio_name)) + 
             geom_bar(stat = "identity") + 
-            geom_text(aes(label=CANTIDAD),position=position_dodge(width=0.9),size=10, vjust=0) +
+            geom_text(aes(label=CANTIDAD),position=position_dodge(width=0.9),size=5, vjust=0) +
             xlab(input$variable) + labs(title="Contagios por municipio") + 
             theme(axis.text.x=element_text(angle =- 45, vjust = 0.5)) + 
             theme(legend.position="none")
@@ -435,11 +435,11 @@ function(session, input, output) {
     
     #histograma tasa de contagio por municipio -------------
     output$histTasaMunicipios <- renderPlot({
-        p <- df_mxmunicipio_TLX %>% filter(CANTIDAD > 0) %>%  mutate(municipio_name = fct_reorder(municipio_name, desc(CANTIDAD))) %>%
+        p <- df_mxmunicipio_TLX %>% filter(CANTIDAD > 10) %>%  mutate(municipio_name = fct_reorder(municipio_name, desc(CANTIDAD))) %>%
             ggplot( aes(x=municipio_name,y=(CANTIDAD*1000/pop),fill=municipio_name)) + 
             geom_bar(stat = "identity") + 
             geom_text(aes(label=round((CANTIDAD*1000/pop),2)),position=position_dodge(width=0.9),size=5, vjust=0) +
-            xlab(input$variable) + labs(title="Tasa de Contagios por Municipio (Por Cada 1,000 habitantes)") + 
+            xlab(input$variable) + labs(title="Tasa de Contagios en Municipio con mas de diez contagios (Por Cada 1,000 habitantes)") + 
             theme(axis.text.x=element_text(angle =- 45, vjust = 0.5)) + ylab("Tasa de contagios por 1,000 habitantes") +
             theme(legend.position="none")
         plot(p)        
@@ -502,7 +502,7 @@ function(session, input, output) {
     output$distContagiados <- renderPlot({
         p <- ggplot(COVID19_SECTOR, aes(x=SECTOR,y=CANTIDAD,fill=SECTOR)) + 
             geom_bar(stat = "identity") + 
-            geom_text(aes(label=CANTIDAD),position=position_stack( vjust=0.5),size=10) +
+            geom_text(aes(label=CANTIDAD),position=position_stack( vjust=0.5),size=5) +
             xlab(input$variable) + labs(title="Pacientes con resultado positivo") + 
           theme(legend.position="none")
         plot(p)
@@ -513,7 +513,7 @@ function(session, input, output) {
     output$distIntubados <- renderPlot({
         p <- ggplot(COVID19_INTUBADO, aes(x=SECTOR,y=CANTIDAD,fill=SECTOR)) + 
             geom_bar(stat = "identity") + 
-            geom_text(aes(label=CANTIDAD),position=position_stack( vjust=0.5), size=8) +
+            geom_text(aes(label=CANTIDAD),position=position_stack( vjust=0.5), size=5) +
             xlab(input$variable) + labs(title="Pacientes intubados") + 
           theme(legend.position="none")
         plot(p)

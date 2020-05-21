@@ -51,7 +51,7 @@ body <- dashboardBody(
       tags$p(
         class = "text-center",
         tags$img(class = "img-responsive img-rounded center-block", src = "http://dsinteg.com/img/QuedateEnCasa-01.png", style = "max-width: 150px;")),
-            h1("Estadística de contagios por COVID19 en el estado de Tlaxcala, actualizado a 22 de Abril 2020 "),
+            h1("Estadística de contagios por COVID19 en el estado de Tlaxcala, actualizado a 20 de Mayo 2020 "),
             tags$a( href="https://datos.gob.mx/busca/dataset/informacion-referente-a-casos-covid-19-en-mexico", "Fuente: datos.gob.mx",target="_blank"),hr(),
     
             h2("Resumen de Transmisiones" ),p("En Tlaxcala, el primer paciente contagiado con COVID-19 fue hospitalizado el día 23 de marzo."),
@@ -190,7 +190,7 @@ body <- dashboardBody(
               )
             ),
     #### Graficas por municipios -------------
-            h3("Municipio de residencia de contagiados de COVID-19 atendidos en Tlaxcala"), hr(),
+            h3("Municipios con mas de diez contagiados de COVID-19 en Tlaxcala"), hr(),
             ## Histograma Contagios por Municipio ------------
             fluidRow(
               column(width = 12,
@@ -212,7 +212,7 @@ body <- dashboardBody(
               )              
             ),
             ## Tabla Contagios por Municipio -------------
-            h3("Municipios donde habitan contagiados con COVID-19 atendidos en intituciones de Tlaxcala"), hr(),
+            h3("Municipios de residencia de contagiados de con COVID-19 atendidos en intituciones de Tlaxcala"), hr(),
             fluidRow(
               column(width = 6, box(width = 12, DT::dataTableOutput("table"))  )
                        
